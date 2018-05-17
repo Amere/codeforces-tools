@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Utils {
 
-    public static final String DATA_PATH = "/home/hossam/data/problems";
+    public static final String DATA_PATH = "/home/hossam/data/problems/";
 
     /**
      * Get FileNames In A Directory
