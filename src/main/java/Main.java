@@ -1,7 +1,22 @@
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import helpers.Utils;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
-    public static void main(String[] args) {
 
+    public void seed() throws IOException {
+
+    }
+
+    public static void main(String[] args) throws Exception {
+        ArrayList<String> fileNames = Utils.getFileNamesInADirectory("/home/hossam/data/problems");
+        for (String fileName : fileNames) {
+            JsonObject request = new JsonParser().parse(Utils.readFileAsString(fileName)).getAsJsonObject();
+            Utils.writeToAFile("/home/hossam/problems.json", request.toString());
+        }
     }
 }
