@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 public class Utils {
 
+    public static final String DATA_PATH = "/home/hossam/data/problems";
+
     /**
      * Get FileNames In A Directory
      *
@@ -37,7 +39,7 @@ public class Utils {
      * @throws Exception
      */
     public static String readFileAsString(String fileName) throws Exception {
-        return new String(Files.readAllBytes(Paths.get("/home/hossam/data/problems/" + fileName)));
+        return new String(Files.readAllBytes(Paths.get(DATA_PATH + fileName)));
     }
 
     /**

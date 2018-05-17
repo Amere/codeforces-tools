@@ -8,15 +8,16 @@ import java.util.ArrayList;
 public class Main {
 
 
+
     public void seed() throws IOException {
 
     }
 
     public static void main(String[] args) throws Exception {
-        ArrayList<String> fileNames = Utils.getFileNamesInADirectory("/home/hossam/data/problems");
+        ArrayList<String> fileNames = Utils.getFileNamesInADirectory(Utils.DATA_PATH);
         for (String fileName : fileNames) {
             JsonObject request = new JsonParser().parse(Utils.readFileAsString(fileName)).getAsJsonObject();
-            Utils.writeToAFile("/home/hossam/problems.json", request.toString());
+            Utils.writeToAFile("~/problems.json", request.toString());
         }
     }
 }
