@@ -53,5 +53,6 @@ public class Utils {
         FileWriter fw = new FileWriter(fileName);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(text);
+        bw.close();
     }
 }
