@@ -1,5 +1,7 @@
 package helpers;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,7 +12,9 @@ import java.util.ArrayList;
 
 public class Utils {
 
-    public static final String DATA_PATH = "/home/hossam/data/problems/";
+    public static final String PROBLEMS_DATA_PATH = "/Users/ahmedamer/Desktop/data/problems/";
+    public static final String USERS_DATA_PATH = "/Users/ahmedamer/Desktop/data/users/";
+    public static final String CONTESTS_DATA_PATH = "/Users/ahmedamer/Desktop/data/contests/";
 
     /**
      * Get FileNames In A Directory
@@ -38,8 +42,8 @@ public class Utils {
      * @return
      * @throws Exception
      */
-    public static String readFileAsString(String fileName) throws Exception {
-        return new String(Files.readAllBytes(Paths.get(DATA_PATH + fileName)));
+    public static String readFileAsString(String path, String fileName) throws Exception {
+        return new String(Files.readAllBytes(Paths.get(path + fileName)));
     }
 
     /**
@@ -54,5 +58,15 @@ public class Utils {
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(text);
         bw.close();
+    }
+
+    public static JsonArray getUserStatus(String handle) throws  Exception{
+        return new JsonParser().parse(Utils.readFileAsString(Utils.USERS_DATA_PATH + "/"
+                + handle + "/", "status.json")).getAsJsonArray();
+    }
+
+    public static JsonArray getUserRating(String handle) throws Exception{
+        return new JsonParser().parse(Utils.readFileAsString(Utils.USERS_DATA_PATH + "/"
+                + handle + "/", "rating.json")).getAsJsonArray();
     }
 }
