@@ -73,7 +73,7 @@ public class User implements Serializable {
         }
         Serializer ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "sortedAcceptedProblems");
         ser.writeObject(sortedAcceptedProblems);
-        ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "firstSubmission");
+        ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "firstSubmissions");
         ser.writeObject(firstSubmission);
     }
 
@@ -88,9 +88,9 @@ public class User implements Serializable {
             JsonObject data = record.getAsJsonObject();
             contestRanking.put(data.get("contestId").getAsInt(), data.get("rank").getAsInt());
         }
+        System.out.println(contestRanking);
         Serializer ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "contestRanking");
         ser.writeObject(contestRanking);
-        ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "contestRanking");
         /**
          * Users final rarting at current time
          */
