@@ -12,6 +12,10 @@ public class UserStalking {
     }
 
     public int getStart(int val){
+        /**
+         * used to get the start of the intervel to search
+         * for users
+         */
         int lo = 0;int hi= users.size()-1;
         while(lo<hi){
             int mid = (lo+hi)/2;
@@ -29,6 +33,9 @@ public class UserStalking {
     }
 
     public ArrayList<User> getUsersInRange(int rLo,int rHi){
+        /**
+         * gets all the users in the desired range
+         */
         ArrayList<User> result = new ArrayList<>();
 
         int start = getStart(rLo);
@@ -42,6 +49,9 @@ public class UserStalking {
     }
 
     public int getAcceptedProblemsCount(User user,int t1,int t2){
+        /**
+         * gets the count of the problems in the desired time range for a user
+         */
         ArrayList<User.AcceptedProblemDataPair> sortedAcceptedProblems = user.sortedAcceptedProblems;
         int lo = 0;int hi= users.size()-1;
         int mid = -1;
@@ -73,6 +83,9 @@ public class UserStalking {
 
     ArrayList<String> getActiveUsers(int t1, int t2, int rLo, int rHi, int cnt) throws Exception {
 
+        /**
+         * gets the active users with the desired parameters
+         */
         Deserializer des = new Deserializer("/Users/mohamedalattal/Documents/Semester10/","user_ratings");
         //ArrayList<User.UserRatingDataPair> ratings = des.readObject();
         ArrayList<User> users = getUsersInRange(rLo,rHi);

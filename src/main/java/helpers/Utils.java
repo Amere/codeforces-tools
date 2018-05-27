@@ -39,6 +39,13 @@ public class Utils {
         }
         return fileNames;
     }
+
+    /**
+     * Get DirectoryNames In A Directory
+     *
+     * @param fileName
+     * @return
+     */
     public static ArrayList<String> getFolderNamesInADirectory(String fileName) {
         File folder = new File(fileName);
         File[] listOfFiles = folder.listFiles();
