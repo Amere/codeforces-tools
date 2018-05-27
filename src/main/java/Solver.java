@@ -122,6 +122,8 @@ public class Solver {
          * Load users serialized data
          * to answer the problem
          */
+
+
         Deserializer deser = new Deserializer(Utils.USERS_DATA_PATH + handle + "/", "contestRanking");
         HashMap<Integer, Integer> contestRanking = (HashMap<Integer, Integer>) deser.readObject();
         deser = new Deserializer(Utils.USERS_DATA_PATH + handle + "/", "firstSubmissions");
