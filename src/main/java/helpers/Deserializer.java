@@ -20,8 +20,8 @@ public class Deserializer {
 
     public Object readObject() throws Exception {
         Object ret = objectInputStream.readObject();
-        objectInputStream.close();
         fileInputStream.close();
+        objectInputStream.close();
         return ret;
     }
 
