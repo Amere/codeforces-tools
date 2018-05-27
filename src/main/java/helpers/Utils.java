@@ -11,20 +11,22 @@ import java.util.ArrayList;
 
 public class Utils {
 
-    public static final String PROBLEMS_DATA_PATH = "/Users/ahmedamer/Desktop/data/problems/";
-    public static final String USERS_DATA_PATH = "/Users/ahmedamer/Desktop/data/users/";
-    public static final String CONTESTS_DATA_PATH = "/Users/ahmedamer/Desktop/data/contests/";
-    public static final String CONTESTS_ARRAY_PATH = "/Users/ahmedamer/Desktop/data/";
+    public static final String PROBLEMS_DATA_PATH = System.getenv("HOME") + "/Desktop/data/problems/";
+    public static final String USERS_DATA_PATH = System.getenv("HOME") + "/Desktop/data/users/";
+    public static final String CONTESTS_DATA_PATH = System.getenv("HOME") + "/Desktop/data/contests/";
+    public static final String CONTESTS_ARRAY_PATH = System.getenv("HOME") + "/Desktop/data/";
     public static final String CONTESTS_ARRAY_FILE = "CONTESTS_ARRAY_FILE";
-    public static final String RATINGS_PATH = "/Users/ahmedamer/Desktop/data/";
+    public static final String RATINGS_PATH = System.getenv("HOME") + "/Desktop/data/";
     public static final String RATINGS_FILE = "user_ratings";
 
 
-    public static final String PROBLEMS_SERIALIZED_HASH_POINTS = "/Users/ahmedamer/Desktop/data/";
-    public static final String PROBLEMS_SERIALIZED_HASH_TAG = "/Users/ahmedamer/Desktop/data/";
+    public static final String PROBLEMS_SERIALIZED_HASH_POINTS = System.getenv("HOME") + "/Desktop/data/";
+    public static final String PROBLEMS_SERIALIZED_HASH_TAG = System.getenv("HOME") + "/Desktop/data/";
+    public static final String PROBLEMS_SERIALIZED_HASH_COUNT = System.getenv("HOME") + "/Desktop/data/";
 
     public static final String PROBLEMS_SERIALIZED_HASH_POINTS_FILE = "PROBLEMS_SERIALIZED_HASH_POINTS_FILE";
     public static final String PROBLEMS_SERIALIZED_HASH_TAG_FILE = "PROBLEMS_SERIALIZED__HASH_TAG_FILE";
+    public static final String PROBLEMS_SERIALIZED_HASH_COUNT_FILE = "PROBLEMS_SERIALIZED__HASH_COUNT_FILE";
 
 
     /**
