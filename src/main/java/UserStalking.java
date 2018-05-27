@@ -50,7 +50,7 @@ public class UserStalking {
                 break;
             result.add(users.get(i));
         }
-        System.out.println("ezit get range");
+        System.out.println("exit get range");
         return result;
     }
 
@@ -91,16 +91,18 @@ public class UserStalking {
          */
         Deserializer des = new Deserializer(Utils.RATINGS_PATH, Utils.RATINGS_FILE);
         users = ((ArrayList<User.UserRatingDataPair>)des.readObject());
-        ArrayList<User.UserRatingDataPair> users = getUsersInRange(rLo,rHi);
+        System.out.println(users.size());
+        ArrayList<User.UserRatingDataPair> users2 = getUsersInRange(rLo,rHi);
+        if(users2 == null)
+            return new ArrayList<>();
         ArrayList<User.UserActivityDataPair> active = new ArrayList<>();
         ArrayList<String> res = new ArrayList<>();
         ArrayList<String> fileNames = Utils.getFolderNamesInADirectory(Utils.USERS_DATA_PATH);
-        for(String name: fileNames){
-            System.out.println(Utils.USERS_DATA_PATH+name+"/");
-            Deserializer des2 = new Deserializer(Utils.USERS_DATA_PATH+name+"/","sortedAcceptedProblems");
+        for(User.UserRatingDataPair user: users2){
+            Deserializer des2 = new Deserializer(Utils.USERS_DATA_PATH+user.handle+"/","sortedAcceptedProblems");
             ArrayList<User.AcceptedProblemDataPair> acceptedProblemDataPairs = ((ArrayList<User.AcceptedProblemDataPair>)des2.readObject());
             int rat = getAcceptedProblemsCount(acceptedProblemDataPairs,t1,t2);
-            active.add(new User.UserActivityDataPair(name,rat));
+            active.add(new User.UserActivityDataPair(user.handle,rat));
         }
         Collections.sort(active);
         for (int i = 0; i < cnt; i++) {

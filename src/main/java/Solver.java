@@ -22,6 +22,7 @@ public class Solver {
 
     public void prepareProblems() throws Exception {
         HashMap<String, Integer> problemToPoints = new HashMap<String, Integer> ();
+        HashMap<String, Integer> problemToCount = new HashMap<String, Integer> ();
         HashMap<String, ArrayList<String>> problemToTags = new HashMap<String, ArrayList<String>> ();
         ArrayList<String> fileNames = Utils.getFileNamesInADirectory(Utils.PROBLEMS_DATA_PATH);
         for (String fileName : fileNames) {
@@ -44,12 +45,21 @@ public class Solver {
                     problemToPoints.put(name, 0);
                 }
             }
+            JsonArray problemStatistics = request.get("problemStatistics").getAsJsonArray();
+            for(int i = 0; i < problemStatistics.size(); i++){
+                JsonObject problem = problemStatistics.get(i).getAsJsonObject();
+                String name = problem.get("contestId").getAsInt() + problem.get("index").getAsString();
+                Integer solvedCount = problem.get("solvedCount").getAsInt();
+                problemToCount.put(name,solvedCount);
+            }
         }
         System.err.println("Problems loaded to RAM, problems size : " + problemToTags.size());
         Serializer ser = new Serializer(Utils.PROBLEMS_SERIALIZED_HASH_POINTS, Utils.PROBLEMS_SERIALIZED_HASH_POINTS_FILE );
         ser.writeObject(problemToPoints);
         ser = new Serializer(Utils.PROBLEMS_SERIALIZED_HASH_TAG, Utils.PROBLEMS_SERIALIZED_HASH_TAG_FILE );
         ser.writeObject(problemToTags);
+        ser = new Serializer(Utils.PROBLEMS_SERIALIZED_HASH_COUNT, Utils.PROBLEMS_SERIALIZED_HASH_COUNT_FILE );
+        ser.writeObject(problemToCount);
         System.err.println("Problems deleted from RAM");
     }
 
@@ -82,18 +92,13 @@ public class Solver {
             }
         }
         Collections.sort(ratings);
-        Serializer ser = new Serializer(Utils.RATINGS_PATH, Utils.RATINGS_FILE );
+        Serializer ser = new Serializer(Utils.RATINGS_PATH, Utils.RATINGS_FILE);
         ser.writeObject(ratings);
         System.out.println("Finished loading users");
         System.out.println(ratings);
-
     }
 
 
-    /**
-     * I'll complete the contests here the same with prepare problems
-     * @throws Exception
-     */
 
     public void prepareContests() throws Exception {
         ArrayList<Contest> contests = new ArrayList<Contest> ();
@@ -114,11 +119,17 @@ public class Solver {
 //        System.err.println("Problems cnt : " + curUser.firstSubmission.size());
 
         /**
-         * Load users serialized data to answer the problem
+         * Load users serialized data
+         * to answer the problem
          */
-        Deserializer deser = new Deserializer(Utils.PROBLEMS_DATA_PATH + handle + "/", "contestRating");
-        HashMap<Integer, Integer> contestRating = (HashMap<Integer, Integer>) deser.readObject();
-        System.out.println(contestRating.size() + contestRating.toString());
+        Deserializer deser = new Deserializer(Utils.USERS_DATA_PATH + handle + "/", "contestRanking");
+        HashMap<Integer, Integer> contestRanking = (HashMap<Integer, Integer>) deser.readObject();
+        deser = new Deserializer(Utils.USERS_DATA_PATH + handle + "/", "firstSubmissions");
+        HashMap<String, Integer> firstSubmission = (HashMap<String, Integer>) deser.readObject();
+        deser = new Deserializer(Utils.CONTESTS_ARRAY_PATH, Utils.CONTESTS_ARRAY_FILE);
+        System.out.println("Old Rankings : " + contestRanking);
+        ArrayList<Contest> contests = (ArrayList<Contest>) deser.readObject();
+        System.out.println(firstSubmission.size() + firstSubmission.toString());
         return null;
     }
 }

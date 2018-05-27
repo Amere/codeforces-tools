@@ -19,7 +19,7 @@ public class Serializer {
 
     public void writeObject(Object o) throws Exception {
         ojectOutputStream.writeObject(o);
-        ojectOutputStream.close();
         fileOutputStream.close();
+        ojectOutputStream.close();
     }
 }

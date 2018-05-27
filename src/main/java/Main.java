@@ -10,22 +10,15 @@ public class Main {
 
 
 
-    public void seed() throws IOException {
-
-    }
 
     public static void main(String[] args) throws Exception {
-//        ArrayList<String> fileNames = Utils.getFileNamesInADirectory(Utils.DATA_PATH);
-//        for (String fileName : fileNames) {
-//            JsonObject request = new JsonParser().parse(Utils.readFileAsString(fileName)).getAsJsonObject();
-//            Utils.writeToAFile("problems.json", request.toString());
-//        }
+
 
         Solver solver = new Solver();
         solver.prepareProblems();
-        solver.prepareContests();
+        //solver.prepareContests();
         solver.prepareUsers();
-//        solver.evaluateConstestPerformance("Amerisma", false);
+        solver.evaluateConstestPerformance("Amerisma", false);
 
     }
 }
