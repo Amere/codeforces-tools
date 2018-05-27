@@ -1,6 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import helpers.Deserializer;
 import helpers.Serializer;
 import helpers.Utils;
 
@@ -51,6 +52,12 @@ public class Solver {
         System.err.println("Problems deleted from RAM");
     }
 
+//    public void readProblemsTest() throws  Exception{
+//        Deserializer deser = new Deserializer(Utils.PROBLEMS_SERIALIZED_HASH_POINTS, Utils.PROBLEMS_SERIALIZED_HASH_POINTS_FILE);
+//        HashMap<String, Integer> Ret = (HashMap<String, Integer>) deser.readObject();
+//        System.out.println(Ret.size() + Ret.toString());
+//    }
+
     public void loadUsers() throws Exception {
         /**
          * Here we should go over all users in the directory
@@ -73,7 +80,11 @@ public class Solver {
         ArrayList<String> fileNames = Utils.getFileNamesInADirectory(Utils.CONTESTS_DATA_PATH);
         for(String fileName : fileNames)
             contests.add(new Contest(fileName));
-        System.err.println("Contests loaded to RAM, contests size : " + contests.size());
+        System.err.println("Contests loaded to RAM, constests size : " + contests.size());
+        Serializer ser = new Serializer(Utils.CONTESTS_ARRAY_PATH, Utils.CONTESTS_ARRAY_FILE);
+        ser.writeObject(contests);
+        System.err.println("Contests deleted from RAM");
+        System.err.println("Contests Array written on disk");
     }
 
     public HashMap<Integer, Integer> evaluateConstestPerformance(String handle, boolean plot) throws Exception {
@@ -81,8 +92,8 @@ public class Solver {
         System.err.println("User : " + curUser.handle + " loaded successfully");
         System.err.println("Contests cnt : " + curUser.contestRanking.size());
         System.err.println("Problems cnt : " + curUser.firstSubmission.size());
-//        System.err.println("Accepted problems cnt : " + curUser.acceptedProblems.size());
-//        return null;
+
+        
         return null;
     }
 }

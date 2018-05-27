@@ -14,6 +14,11 @@ public class Utils {
     public static final String PROBLEMS_DATA_PATH = "/Users/ahmedamer/Desktop/data/problems/";
     public static final String USERS_DATA_PATH = "/Users/ahmedamer/Desktop/data/users/";
     public static final String CONTESTS_DATA_PATH = "/Users/ahmedamer/Desktop/data/contests/";
+    public static final String CONTESTS_ARRAY_PATH = "/Users/ahmedamer/Desktop/data/";
+    public static final String CONTESTS_ARRAY_FILE = "CONTESTS_ARRAY_FILE";
+
+
+
     public static final String PROBLEMS_SERIALIZED_HASH_POINTS = "/Users/ahmedamer/Desktop/data/";
     public static final String PROBLEMS_SERIALIZED_HASH_TAG = "/Users/ahmedamer/Desktop/data/";
 

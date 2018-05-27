@@ -69,8 +69,9 @@ public class User implements Serializable {
         Serializer ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "sortedAcceptedProblems");
         ser.writeObject(sortedAcceptedProblems);
         ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "firstSubmission");
-
     }
+
+
     public void processContestsRanking() throws  Exception {
         JsonArray RATING = Utils.getUserRating(this.handle);
         for(JsonElement record : RATING) {
@@ -86,6 +87,8 @@ public class User implements Serializable {
          * Users final rarting at current time
          */
         this.currentRating = RATING.get(RATING.size() - 1).getAsJsonObject().get("newRating").getAsInt();
+
+
     }
 
     /**
