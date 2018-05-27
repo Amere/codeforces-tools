@@ -1,6 +1,5 @@
 package helpers;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,9 +11,15 @@ import java.util.ArrayList;
 
 public class Utils {
 
-    public static final String PROBLEMS_DATA_PATH = "/Users/ahmedamer/Desktop/data/problems/";
-    public static final String USERS_DATA_PATH = "/Users/ahmedamer/Desktop/data/users/";
-    public static final String CONTESTS_DATA_PATH = "/Users/ahmedamer/Desktop/data/contests/";
+    public static final String PROBLEMS_DATA_PATH = "/Users/mohamedalattal/Documents/Semester10/Advanced data structure/data/problems/";
+    public static final String USERS_DATA_PATH = "/Users/mohamedalattal/Documents/Semester10/Advanced data structure/data/users/";
+    public static final String CONTESTS_DATA_PATH = "/Users/mohamedalattal/Documents/Semester10/Advanced data structure/data/contests/";
+    public static final String PROBLEMS_SERIALIZED_HASH_POINTS = "/Users/mohamedalattal/Documents/Semester10/Advanced data structure/data";
+    public static final String PROBLEMS_SERIALIZED_HASH_TAG = "/Users/mohamedalattal/Documents/Semester10/Advanced data structure/data/";
+
+    public static final String PROBLEMS_SERIALIZED_HASH_POINTS_FILE = "PROBLEMS_SERIALIZED_HASH_POINTS_FILE";
+    public static final String PROBLEMS_SERIALIZED_HASH_TAG_FILE = "PROBLEMS_SERIALIZED__HASH_TAG_FILE";
+
 
     /**
      * Get FileNames In A Directory
@@ -29,6 +34,18 @@ public class Utils {
         assert listOfFiles != null;
         for (File listOfFile : listOfFiles) {
             if (listOfFile.isFile()) {
+                fileNames.add(listOfFile.getName());
+            }
+        }
+        return fileNames;
+    }
+    public static ArrayList<String> getFolderNamesInADirectory(String fileName) {
+        File folder = new File(fileName);
+        File[] listOfFiles = folder.listFiles();
+        ArrayList<String> fileNames = new ArrayList();
+        assert listOfFiles != null;
+        for (File listOfFile : listOfFiles) {
+            if (listOfFile.isDirectory()) {
                 fileNames.add(listOfFile.getName());
             }
         }
