@@ -35,6 +35,6 @@ the number of problems in range is counted.
 Here segment tree could have been a better option to get the count in lg(n) time However a new segment tree would have been constructed for each user.
 
 After sorting the users based on activity the requested number of users is returned as a result.
-The total time should be ~Nlg(N)~.
+The total time should be `Nlg(N)`.
 
 ## problem 1.4
