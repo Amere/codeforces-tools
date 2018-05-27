@@ -44,6 +44,18 @@ public class Utils {
         }
         return fileNames;
     }
+    public static ArrayList<String> getFolderNamesInADirectory(String fileName) {
+        File folder = new File(fileName);
+        File[] listOfFiles = folder.listFiles();
+        ArrayList<String> fileNames = new ArrayList();
+        assert listOfFiles != null;
+        for (File listOfFile : listOfFiles) {
+            if (listOfFile.isDirectory()) {
+                fileNames.add(listOfFile.getName());
+            }
+        }
+        return fileNames;
+    }
 
     /**
      * Read File As A String
