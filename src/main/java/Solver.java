@@ -1,6 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import helpers.Serializer;
 import helpers.Utils;
 
 import java.util.ArrayList;
@@ -13,15 +14,13 @@ public class Solver {
      * So a problem id could be 65C which means problem C on contest 65
      * */
 
-    public static HashMap<String, Integer> problemToPoints;
-    public static HashMap<String, ArrayList<String>> problemToTags;
-    public static ArrayList<Contest> contests;
     public Solver() {
-        problemToPoints = new HashMap<String, Integer> ();
-        problemToTags = new HashMap<String, ArrayList<String>> ();
     }
 
+
     public void prepareProblems() throws Exception {
+        HashMap<String, Integer> problemToPoints = new HashMap<String, Integer> ();
+        HashMap<String, ArrayList<String>> problemToTags = new HashMap<String, ArrayList<String>> ();
         ArrayList<String> fileNames = Utils.getFileNamesInADirectory(Utils.PROBLEMS_DATA_PATH);
         for (String fileName : fileNames) {
             JsonObject request = new JsonParser().parse(Utils.readFileAsString(Utils.PROBLEMS_DATA_PATH, fileName)).getAsJsonObject();
@@ -45,23 +44,36 @@ public class Solver {
             }
         }
         System.err.println("Problems loaded to RAM, problems size : " + problemToTags.size());
+        Serializer ser = new Serializer(Utils.PROBLEMS_SERIALIZED_HASH_POINTS, Utils.PROBLEMS_SERIALIZED_HASH_POINTS_FILE );
+        ser.writeObject(problemToPoints);
+        ser = new Serializer(Utils.PROBLEMS_SERIALIZED_HASH_TAG, Utils.PROBLEMS_SERIALIZED_HASH_TAG_FILE );
+        ser.writeObject(problemToTags);
+        System.err.println("Problems deleted from RAM");
     }
 
+
+    /**
+     * I'll complete the contests here the same with prepare problems
+     * @throws Exception
+     */
+
     public void prepareContests() throws Exception {
-        contests = new ArrayList<Contest> ();
+        ArrayList<Contest> contests = new ArrayList<Contest> ();
         ArrayList<String> fileNames = Utils.getFileNamesInADirectory(Utils.CONTESTS_DATA_PATH);
         for(String fileName : fileNames)
             contests.add(new Contest(fileName));
         System.err.println("Contests loaded to RAM, contests size : " + contests.size());
     }
 
-    public HashMap<Integer, Integer> evaluateConstestPerformance(String handle, boolean plot) throws Exception{
+    public HashMap<Integer, Integer> evaluateConstestPerformance(String handle, boolean plot) throws Exception {
         User curUser = new User(handle);
         System.err.println("User : " + curUser.handle + " loaded successfully");
         System.err.println("Contests cnt : " + curUser.contestRanking.size());
         System.err.println("Problems cnt : " + curUser.firstSubmission.size());
-        System.err.println("Accepted problems cnt : " + curUser.acceptedProblems.size());
+//        System.err.println("Accepted problems cnt : " + curUser.acceptedProblems.size());
+//        return null;
         return null;
     }
+
 
 }

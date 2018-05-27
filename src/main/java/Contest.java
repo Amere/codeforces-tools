@@ -4,9 +4,23 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import helpers.Utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Contest {
+public class Contest implements Serializable {
+    /**
+     *
+     * A Contest Class that contains all contest
+     * important details
+     * All arrays are sorted according
+     * to the rank of the user with this handle
+     * int the current contest
+     * so handle[0] is the handle of the first user
+     * penalty[0][0]
+     */
+
+
+
     /**
      * @param handle[0] : means the name of the user who got rank 1
      * @param type : ICPC / CF
@@ -55,6 +69,4 @@ public class Contest {
             }
         }
     }
-
-
 }
