@@ -50,3 +50,4 @@ buildNumber.properties
 .DS_Store
 
 *.json
+*.ser

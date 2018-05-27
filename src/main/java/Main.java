@@ -25,7 +25,7 @@ public class Main {
         solver.prepareProblems();
         solver.prepareContests();
         solver.prepareUsers();
-//        solver.evaluateConstestPerformance("Amerisma", false);
+        solver.evaluateConstestPerformance("Amesrisma", false);
 
     }
 }
