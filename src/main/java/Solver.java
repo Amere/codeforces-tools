@@ -53,7 +53,13 @@ public class Solver {
         System.err.println("Problems deleted from RAM");
     }
 
-    public void loadUsers() throws Exception {
+//    public void readProblemsTest() throws  Exception{
+//        Deserializer deser = new Deserializer(Utils.PROBLEMS_SERIALIZED_HASH_POINTS, Utils.PROBLEMS_SERIALIZED_HASH_POINTS_FILE);
+//        HashMap<String, Integer> Ret = (HashMap<String, Integer>) deser.readObject();
+//        System.out.println(Ret.size() + Ret.toString());
+//    }
+
+    public void prepareUsers() throws Exception {
         /**
          * Here we should go over all users in the directory
          * and get their currentRating from the object created
@@ -64,14 +70,23 @@ public class Solver {
          */
         ArrayList<String> fileNames = Utils.getFolderNamesInADirectory(Utils.USERS_DATA_PATH);
         ArrayList<User.UserRatingDataPair> ratings = new ArrayList<>();
+
+        System.out.println("Started loading users");
         for (String fileName : fileNames) {
-            User user = new User(fileName);
-            User.UserRatingDataPair pair = new User.UserRatingDataPair(user.handle,user.currentRating);
-            ratings.add(pair);
+            if(fileName.equals("Amerisma")) {
+                System.out.println("Amerisma Insettion");
+                User user = new User(fileName);
+                User.UserRatingDataPair pair = new User.UserRatingDataPair(user.handle, user.currentRating);
+                ratings.add(pair);
+                System.out.println("Amerisma Insettion");
+            }
         }
         Collections.sort(ratings);
-        Serializer ser = new Serializer("/Users/mohamedalattal/Documents/Semester10/", "users_ratings" );
+        Serializer ser = new Serializer(Utils.RATINGS_PATH, Utils.RATINGS_FILE );
         ser.writeObject(ratings);
+        System.out.println("Finished loading users");
+        System.out.println(ratings);
+
     }
 
 
@@ -85,21 +100,25 @@ public class Solver {
         ArrayList<String> fileNames = Utils.getFileNamesInADirectory(Utils.CONTESTS_DATA_PATH);
         for(String fileName : fileNames)
             contests.add(new Contest(fileName));
-        System.err.println("Contests loaded to RAM, contests size : " + contests.size());
+        System.err.println("Contests loaded to RAM, constests size : " + contests.size());
+        Serializer ser = new Serializer(Utils.CONTESTS_ARRAY_PATH, Utils.CONTESTS_ARRAY_FILE);
+        ser.writeObject(contests);
+        System.err.println("Contests deleted from RAM");
+        System.err.println("Contests Array written on disk");
     }
 
     public HashMap<Integer, Integer> evaluateConstestPerformance(String handle, boolean plot) throws Exception {
-        User curUser = new User(handle);
-        System.err.println("User : " + curUser.handle + " loaded successfully");
-        System.err.println("Contests cnt : " + curUser.contestRanking.size());
-        System.err.println("Problems cnt : " + curUser.firstSubmission.size());
-//        System.err.println("Accepted problems cnt : " + curUser.acceptedProblems.size());
-//        return null;
-        return null;
-    }
+//        User curUser = new User(handle);
+//        System.err.println("User : " + curUser.handle + " loaded successfully");
+//        System.err.println("Contests cnt : " + curUser.contestRanking.size());
+//        System.err.println("Problems cnt : " + curUser.firstSubmission.size());
 
-    public static void main(String[] args) throws Exception {
-        Solver s = new Solver();
-        s.loadUsers();
+        /**
+         * Load users serialized data to answer the problem
+         */
+        Deserializer deser = new Deserializer(Utils.PROBLEMS_DATA_PATH + handle + "/", "contestRating");
+        HashMap<Integer, Integer> contestRating = (HashMap<Integer, Integer>) deser.readObject();
+        System.out.println(contestRating.size() + contestRating.toString());
+        return null;
     }
 }

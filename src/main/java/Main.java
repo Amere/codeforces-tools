@@ -20,10 +20,12 @@ public class Main {
 //            JsonObject request = new JsonParser().parse(Utils.readFileAsString(fileName)).getAsJsonObject();
 //            Utils.writeToAFile("problems.json", request.toString());
 //        }
+
         Solver solver = new Solver();
         solver.prepareProblems();
         solver.prepareContests();
-        solver.evaluateConstestPerformance("Amerisma", false);
+        solver.prepareUsers();
+//        solver.evaluateConstestPerformance("Amerisma", false);
 
     }
 }
