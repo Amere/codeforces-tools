@@ -11,16 +11,16 @@ import java.io.ObjectInputStream;
 
 public class Deserializer {
     private FileInputStream fileInputStream;
-    private ObjectInputStream ojectInputStream;
+    private ObjectInputStream objectInputStream;
 
     public Deserializer(String path, String fileName) throws Exception {
         fileInputStream =  new FileInputStream(path + fileName + ".ser/");
-        ojectInputStream = new ObjectInputStream(fileInputStream);
+        objectInputStream = new ObjectInputStream(fileInputStream);
     }
 
     public Object readObject() throws Exception {
-        Object ret = ojectInputStream.readObject();
-        ojectInputStream.close();
+        Object ret = objectInputStream.readObject();
+        objectInputStream.close();
         fileInputStream.close();
         return ret;
     }

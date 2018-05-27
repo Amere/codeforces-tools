@@ -86,14 +86,9 @@ public class Solver {
         ser.writeObject(ratings);
         System.out.println("Finished loading users");
         System.out.println(ratings);
-
     }
 
 
-    /**
-     * I'll complete the contests here the same with prepare problems
-     * @throws Exception
-     */
 
     public void prepareContests() throws Exception {
         ArrayList<Contest> contests = new ArrayList<Contest> ();
@@ -114,11 +109,16 @@ public class Solver {
 //        System.err.println("Problems cnt : " + curUser.firstSubmission.size());
 
         /**
-         * Load users serialized data to answer the problem
+         * Load users serialized data
+         * to answer the problem
          */
-        Deserializer deser = new Deserializer(Utils.PROBLEMS_DATA_PATH + handle + "/", "contestRating");
-        HashMap<Integer, Integer> contestRating = (HashMap<Integer, Integer>) deser.readObject();
-        System.out.println(contestRating.size() + contestRating.toString());
+        Deserializer deser = new Deserializer(Utils.USERS_DATA_PATH + handle + "/", "contestRanking");
+        HashMap<Integer, Integer> contestRanking = (HashMap<Integer, Integer>) deser.readObject();
+        deser = new Deserializer(Utils.USERS_DATA_PATH + handle + "/", "firstSubmissions");
+        HashMap<String, Integer> firstSubmission = (HashMap<String, Integer>) deser.readObject();
+        deser = new Deserializer(Utils.CONTESTS_ARRAY_PATH, Utils.CONTESTS_ARRAY_FILE);
+        ArrayList<Contest> contests = (ArrayList<Contest>) deser.readObject();
+        System.out.println(contestRanking.size() + contestRanking.toString());
         return null;
     }
 }
