@@ -1,10 +1,12 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import helpers.Deserializer;
 import helpers.Serializer;
 import helpers.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Solver {
@@ -60,6 +62,16 @@ public class Solver {
          * arraylist of pair of the handle and the corresponding rating
          * then sort this arraylist based on rating
          */
+        ArrayList<String> fileNames = Utils.getFolderNamesInADirectory(Utils.USERS_DATA_PATH);
+        ArrayList<User.UserRatingDataPair> ratings = new ArrayList<>();
+        for (String fileName : fileNames) {
+            User user = new User(fileName);
+            User.UserRatingDataPair pair = new User.UserRatingDataPair(user.handle,user.currentRating);
+            ratings.add(pair);
+        }
+        Collections.sort(ratings);
+        Serializer ser = new Serializer("/Users/mohamedalattal/Documents/Semester10/", "users_ratings" );
+        ser.writeObject(ratings);
     }
 
 
@@ -84,5 +96,10 @@ public class Solver {
 //        System.err.println("Accepted problems cnt : " + curUser.acceptedProblems.size());
 //        return null;
         return null;
+    }
+
+    public static void main(String[] args) throws Exception {
+        Solver s = new Solver();
+        s.loadUsers();
     }
 }

@@ -41,30 +41,35 @@ public class User implements Serializable {
         JsonArray STATUS = Utils.getUserStatus(this.handle);
         for(JsonElement record : STATUS) {
             JsonObject data = record.getAsJsonObject();
-            String problemName = data.get("problem").getAsJsonObject().get("contestId").getAsInt() +
-                    data.get("problem").getAsJsonObject().get("index").getAsString();
-            Integer curTime = data.get("relativeTimeSeconds").getAsInt();
-            Integer createdTime = data.get("creationTimeSeconds").getAsInt();
-
-            /**
-             * If verdic is OK, add to the sorted ArrayList of
-             * accepted submissions of this user
-             * to be binary-searched on later
-             */
-            if(data.get("verdict").getAsString().equals("OK")) {
-                sortedAcceptedProblems.add(new AcceptedProblemDataPair(problemName, createdTime));
-            }
-
-            if(data.get("author").getAsJsonObject().get("participantType").getAsString().equals("CONTESTANT")) {
+            try {
+                String problemName = data.get("contestId").getAsInt() +
+                        data.get("problem").getAsJsonObject().get("index").getAsString();
+                Integer curTime = data.get("relativeTimeSeconds").getAsInt();
+                Integer createdTime = data.get("creationTimeSeconds").getAsInt();
                 /**
-                 * If the submission is Contestant
-                 * then we can use later to be the first submission
+                 * If verdic is OK, add to the sorted ArrayList of
+                 * accepted submissions of this user
+                 * to be binary-searched on later
                  */
-                Integer cur = firstSubmission.get(problemName);
-                if(cur == null) cur = curTime;
-                cur = Math.min(cur, curTime);
-                firstSubmission.put(problemName, cur);
+                if(data.get("verdict").getAsString().equals("OK")) {
+                    sortedAcceptedProblems.add(new AcceptedProblemDataPair(problemName, createdTime));
+                }
+
+                if(data.get("author").getAsJsonObject().get("participantType").getAsString().equals("CONTESTANT")) {
+                    /**
+                     * If the submission is Contestant
+                     * then we can use later to be the first submission
+                     */
+                    Integer cur = firstSubmission.get(problemName);
+                    if(cur == null) cur = curTime;
+                    cur = Math.min(cur, curTime);
+                    firstSubmission.put(problemName, cur);
+                }
             }
+            catch (Exception e){
+                System.err.println("This problem data is corrupted");
+            }
+
         }
         Serializer ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "sortedAcceptedProblems");
         ser.writeObject(sortedAcceptedProblems);
@@ -79,13 +84,15 @@ public class User implements Serializable {
              * and the contestant rank in it
              */
             JsonObject data = record.getAsJsonObject();
-            System.out.println(data.get("contestId").getAsInt() + " " + data.get("rank").getAsInt());
             contestRanking.put(data.get("contestId").getAsInt(), data.get("rank").getAsInt());
         }
         /**
          * Users final rarting at current time
          */
-        this.currentRating = RATING.get(RATING.size() - 1).getAsJsonObject().get("newRating").getAsInt();
+        if(RATING.size() > 0)
+            this.currentRating = RATING.get(RATING.size() - 1).getAsJsonObject().get("newRating").getAsInt();
+        else
+            this.currentRating = 0;
     }
 
     /**
@@ -109,6 +116,40 @@ public class User implements Serializable {
         @Override
         public int compareTo(Object o) {
             return this.timeCreated - ((AcceptedProblemDataPair) o).timeCreated;
+        }
+    }
+     static class UserRatingDataPair implements Comparable, Serializable {
+        public int currentRating;
+        public String handle;
+        public UserRatingDataPair(String handle, int currentRating) {
+            this.currentRating = currentRating;
+            this.handle = handle;
+        }
+
+        int compareTo(UserRatingDataPair  other) {
+            return this.currentRating - other.currentRating;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            return this.currentRating - ((UserRatingDataPair) o).currentRating;
+        }
+    }
+    static class UserActivityDataPair implements Comparable, Serializable {
+        public int numOfProblems;
+        public String handle;
+        public UserActivityDataPair(String handle, int numOfProblems) {
+            this.numOfProblems = numOfProblems;
+            this.handle = handle;
+        }
+
+        int compareTo(UserActivityDataPair  other) {
+            return this.numOfProblems - other.numOfProblems;
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            return this.numOfProblems - ((UserActivityDataPair) o).numOfProblems;
         }
     }
 }
