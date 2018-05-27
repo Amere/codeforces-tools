@@ -8,6 +8,7 @@ import helpers.Utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Solver {
 
@@ -23,7 +24,7 @@ public class Solver {
     public void prepareProblems() throws Exception {
         HashMap<String, Integer> problemToPoints = new HashMap<String, Integer> ();
         HashMap<String, Integer> problemToCount = new HashMap<String, Integer> ();
-        HashMap<String, ArrayList<String>> problemToTags = new HashMap<String, ArrayList<String>> ();
+        HashMap<String, HashSet<String>> problemToTags = new HashMap<String, HashSet<String>> ();
         ArrayList<String> fileNames = Utils.getFileNamesInADirectory(Utils.PROBLEMS_DATA_PATH);
         for (String fileName : fileNames) {
             JsonObject request = new JsonParser().parse(Utils.readFileAsString(Utils.PROBLEMS_DATA_PATH, fileName)).getAsJsonObject();
@@ -35,7 +36,7 @@ public class Solver {
                 for(int j = 0; j < tags.size(); j++) {
                     String tag = tags.get(j).getAsString();
                     if(problemToTags.get(name) == null)
-                        problemToTags.put(name, new ArrayList<String>());
+                        problemToTags.put(name, new HashSet<String>());
                     problemToTags.get(name).add(tag);
                 }
                 try {
@@ -82,14 +83,14 @@ public class Solver {
         ArrayList<User.UserRatingDataPair> ratings = new ArrayList<>();
 
         System.out.println("Started loading users");
+        int count = 0;
         for (String fileName : fileNames) {
-            if(fileName.equals("Amerisma")) {
-                System.out.println("Amerisma Insettion");
-                User user = new User(fileName);
-                User.UserRatingDataPair pair = new User.UserRatingDataPair(user.handle, user.currentRating);
-                ratings.add(pair);
-                System.out.println("Amerisma Insettion");
-            }
+            User user = new User(fileName);
+            User.UserRatingDataPair pair = new User.UserRatingDataPair(user.handle, user.currentRating);
+            ratings.add(pair);
+            System.out.println(user.handle);
+            if(++count == 50)
+                break;
         }
         Collections.sort(ratings);
         Serializer ser = new Serializer(Utils.RATINGS_PATH, Utils.RATINGS_FILE);
