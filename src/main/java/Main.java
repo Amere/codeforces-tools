@@ -22,7 +22,6 @@ public class Main {
 //        }
         Solver solver = new Solver();
         solver.prepareProblems();
-//        solver.readProblemsTest();
         solver.prepareContests();
 //        solver.evaluateConstestPerformance("Amerisma", false);
 

@@ -80,7 +80,6 @@ public class User implements Serializable {
              * and the contestant rank in it
              */
             JsonObject data = record.getAsJsonObject();
-            System.out.println(data.get("contestId").getAsInt() + " " + data.get("rank").getAsInt());
             contestRanking.put(data.get("contestId").getAsInt(), data.get("rank").getAsInt());
         }
         /**
