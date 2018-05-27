@@ -51,6 +51,17 @@ public class Solver {
         System.err.println("Problems deleted from RAM");
     }
 
+    public void loadUsers() throws Exception {
+        /**
+         * Here we should go over all users in the directory
+         * and get their currentRating from the object created
+         *
+         * then add it to an arraylist created locally here
+         * arraylist of pair of the handle and the corresponding rating
+         * then sort this arraylist based on rating
+         */
+    }
+
 
     /**
      * I'll complete the contests here the same with prepare problems
@@ -74,6 +85,4 @@ public class Solver {
 //        return null;
         return null;
     }
-
-
 }

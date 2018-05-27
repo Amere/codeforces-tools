@@ -1,6 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import helpers.Serializer;
 import helpers.Utils;
 
 import java.io.Serializable;
@@ -65,6 +66,10 @@ public class User implements Serializable {
                 firstSubmission.put(problemName, cur);
             }
         }
+        Serializer ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "sortedAcceptedProblems");
+        ser.writeObject(sortedAcceptedProblems);
+        ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "firstSubmission");
+
     }
     public void processContestsRanking() throws  Exception {
         JsonArray RATING = Utils.getUserRating(this.handle);
