@@ -22,6 +22,7 @@ public class Solver {
 
     public void prepareProblems() throws Exception {
         HashMap<String, Integer> problemToPoints = new HashMap<String, Integer> ();
+        HashMap<String, Integer> problemToCount = new HashMap<String, Integer> ();
         HashMap<String, ArrayList<String>> problemToTags = new HashMap<String, ArrayList<String>> ();
         ArrayList<String> fileNames = Utils.getFileNamesInADirectory(Utils.PROBLEMS_DATA_PATH);
         for (String fileName : fileNames) {
@@ -44,12 +45,21 @@ public class Solver {
                     problemToPoints.put(name, 0);
                 }
             }
+            JsonArray problemStatistics = request.get("problemStatistics").getAsJsonArray();
+            for(int i = 0; i < problemStatistics.size(); i++){
+                JsonObject problem = problemStatistics.get(i).getAsJsonObject();
+                String name = problem.get("contestId").getAsInt() + problem.get("index").getAsString();
+                Integer solvedCount = problem.get("solvedCount").getAsInt();
+                problemToCount.put(name,solvedCount);
+            }
         }
         System.err.println("Problems loaded to RAM, problems size : " + problemToTags.size());
         Serializer ser = new Serializer(Utils.PROBLEMS_SERIALIZED_HASH_POINTS, Utils.PROBLEMS_SERIALIZED_HASH_POINTS_FILE );
         ser.writeObject(problemToPoints);
         ser = new Serializer(Utils.PROBLEMS_SERIALIZED_HASH_TAG, Utils.PROBLEMS_SERIALIZED_HASH_TAG_FILE );
         ser.writeObject(problemToTags);
+        ser = new Serializer(Utils.PROBLEMS_SERIALIZED_HASH_COUNT, Utils.PROBLEMS_SERIALIZED_HASH_COUNT_FILE );
+        ser.writeObject(problemToCount);
         System.err.println("Problems deleted from RAM");
     }
 
