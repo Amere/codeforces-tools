@@ -1,4 +1,5 @@
 import helpers.Deserializer;
+import helpers.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,7 +54,7 @@ public class UserStalking {
             if(t1<users.get(mid).currentRating){
                 hi = mid-1;
             }else{
-                hi=mid;
+                hi = mid;
             }
         }
         if(lo>hi)
@@ -65,15 +66,12 @@ public class UserStalking {
                 break;
             count ++;
         }
-
-
-
         return count;
     }
 
     ArrayList<String> getActiveUsers(int t1, int t2, int rLo, int rHi, int cnt) throws Exception {
 
-        Deserializer des = new Deserializer("/Users/mohamedalattal/Documents/Semester10/","user_ratings");
+        Deserializer des = new Deserializer(Utils.RATINGS_PATH, Utils.RATINGS_FILE);
         //ArrayList<User.UserRatingDataPair> ratings = des.readObject();
         ArrayList<User> users = getUsersInRange(rLo,rHi);
         ArrayList<User.UserActivityDataPair> active = new ArrayList<>();

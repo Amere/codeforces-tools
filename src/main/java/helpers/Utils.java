@@ -16,7 +16,8 @@ public class Utils {
     public static final String CONTESTS_DATA_PATH = "/Users/ahmedamer/Desktop/data/contests/";
     public static final String CONTESTS_ARRAY_PATH = "/Users/ahmedamer/Desktop/data/";
     public static final String CONTESTS_ARRAY_FILE = "CONTESTS_ARRAY_FILE";
-
+    public static final String RATINGS_PATH = "/Users/ahmedamer/Desktop/data/";
+    public static final String RATINGS_FILE = "user_ratings";
 
 
     public static final String PROBLEMS_SERIALIZED_HASH_POINTS = "/Users/ahmedamer/Desktop/data/";

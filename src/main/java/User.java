@@ -37,6 +37,7 @@ public class User implements Serializable {
         processContestsRanking();
         Collections.sort(sortedAcceptedProblems);
     }
+
     public void processFirstSubmissions() throws Exception {
         JsonArray STATUS = Utils.getUserStatus(this.handle);
         for(JsonElement record : STATUS) {
@@ -69,11 +70,11 @@ public class User implements Serializable {
             catch (Exception e){
                 System.err.println("This problem data is corrupted");
             }
-
         }
         Serializer ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "sortedAcceptedProblems");
         ser.writeObject(sortedAcceptedProblems);
         ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "firstSubmission");
+        ser.writeObject(firstSubmission);
     }
 
 
@@ -87,6 +88,9 @@ public class User implements Serializable {
             JsonObject data = record.getAsJsonObject();
             contestRanking.put(data.get("contestId").getAsInt(), data.get("rank").getAsInt());
         }
+        Serializer ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "contestRanking");
+        ser.writeObject(contestRanking);
+        ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "contestRanking");
         /**
          * Users final rarting at current time
          */

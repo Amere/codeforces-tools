@@ -59,7 +59,7 @@ public class Solver {
 //        System.out.println(Ret.size() + Ret.toString());
 //    }
 
-    public void loadUsers() throws Exception {
+    public void prepareUsers() throws Exception {
         /**
          * Here we should go over all users in the directory
          * and get their currentRating from the object created
@@ -70,14 +70,23 @@ public class Solver {
          */
         ArrayList<String> fileNames = Utils.getFolderNamesInADirectory(Utils.USERS_DATA_PATH);
         ArrayList<User.UserRatingDataPair> ratings = new ArrayList<>();
+
+        System.out.println("Started loading users");
         for (String fileName : fileNames) {
-            User user = new User(fileName);
-            User.UserRatingDataPair pair = new User.UserRatingDataPair(user.handle,user.currentRating);
-            ratings.add(pair);
+            if(fileName.equals("Amerisma")) {
+                System.out.println("Amerisma Insettion");
+                User user = new User(fileName);
+                User.UserRatingDataPair pair = new User.UserRatingDataPair(user.handle, user.currentRating);
+                ratings.add(pair);
+                System.out.println("Amerisma Insettion");
+            }
         }
         Collections.sort(ratings);
-        Serializer ser = new Serializer("/Users/mohamedalattal/Documents/Semester10/", "users_ratings" );
+        Serializer ser = new Serializer(Utils.RATINGS_PATH, Utils.RATINGS_FILE );
         ser.writeObject(ratings);
+        System.out.println("Finished loading users");
+        System.out.println(ratings);
+
     }
 
 
@@ -99,17 +108,17 @@ public class Solver {
     }
 
     public HashMap<Integer, Integer> evaluateConstestPerformance(String handle, boolean plot) throws Exception {
-        User curUser = new User(handle);
-        System.err.println("User : " + curUser.handle + " loaded successfully");
-        System.err.println("Contests cnt : " + curUser.contestRanking.size());
-        System.err.println("Problems cnt : " + curUser.firstSubmission.size());
+//        User curUser = new User(handle);
+//        System.err.println("User : " + curUser.handle + " loaded successfully");
+//        System.err.println("Contests cnt : " + curUser.contestRanking.size());
+//        System.err.println("Problems cnt : " + curUser.firstSubmission.size());
 
-        
+        /**
+         * Load users serialized data to answer the problem
+         */
+        Deserializer deser = new Deserializer(Utils.PROBLEMS_DATA_PATH + handle + "/", "contestRating");
+        HashMap<Integer, Integer> contestRating = (HashMap<Integer, Integer>) deser.readObject();
+        System.out.println(contestRating.size() + contestRating.toString());
         return null;
-    }
-
-    public static void main(String[] args) throws Exception {
-        Solver s = new Solver();
-        s.loadUsers();
     }
 }
