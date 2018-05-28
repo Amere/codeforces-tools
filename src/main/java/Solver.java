@@ -174,6 +174,7 @@ public class Solver {
                         newPoints += problemPoints - (problemPoints / 250) * timeForFirstSubmission;
                     }
                 }
+                System.out.println(totPoints  + "  " + newPoints);
             }
             System.out.println(entry.getKey() + "/" + entry.getValue());
         }
