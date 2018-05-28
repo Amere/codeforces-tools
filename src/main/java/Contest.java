@@ -50,7 +50,7 @@ public class Contest implements Serializable {
             for(JsonElement problem : problemResults) {
                 if(type.equals("ICPC")) {
                     try {
-                        int timeInMinutes = problem.getAsJsonObject().get("bestSubmissionTimeSeconds").getAsInt() / 60;
+                        int timeInMinutes = problem.getAsJsonObject().get("bestSubmissionTimeSeconds").getAsInt() / 60000;
                         int wrongSubmissions = problem.getAsJsonObject().get("rejectedAttemptCount").getAsInt();
                         int totPenalty = wrongSubmissions * 2 + timeInMinutes;
                         penalty.get(penalty.size() - 1).add(totPenalty);

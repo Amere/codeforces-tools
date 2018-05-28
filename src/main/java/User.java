@@ -87,7 +87,7 @@ public class User implements Serializable {
             JsonObject data = record.getAsJsonObject();
             contestRanking.put(data.get("contestId").getAsInt(), data.get("rank").getAsInt());
         }
-//        System.out.println(contestRanking);
+
         Serializer ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "contestRanking");
         ser.writeObject(contestRanking);
         /**

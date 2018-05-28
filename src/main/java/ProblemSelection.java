@@ -1,5 +1,7 @@
 import helpers.Deserializer;
 import helpers.Utils;
+
+import java.io.Serializable;
 import java.util.*;
 
 public class ProblemSelection {
@@ -124,21 +126,13 @@ public class ProblemSelection {
         return links;
     }
 
-    //Reads data from serialized objects and feeds it to the segment tree
+    //Reads data from serialized objects and the segment tree
     public static void prepareProblem() throws Exception {
-        Deserializer des = new Deserializer(Utils.PROBLEMS_SERIALIZED_HASH_COUNT, Utils.PROBLEMS_SERIALIZED_HASH_COUNT_FILE);
-        HashMap<String, Integer> problemToCount = (HashMap<String, Integer>) des.readObject();
+        Deserializer des = new Deserializer(Utils.PROBLEMS_SERIALIZED_SEG_TREE_COUNT, Utils.PROBLEMS_SERIALIZED_SEG_TREE_COUNT_FILE);
+        problemCountSegmentTree = (SegmentTree) des.readObject();
         des = new Deserializer(Utils.PROBLEMS_SERIALIZED_HASH_TAG, Utils.PROBLEMS_SERIALIZED_HASH_TAG_FILE);
         problemToTags =  (HashMap<String, HashSet<String>>) des.readObject();
-        problemCountSegmentTree = new SegmentTree(90000);
-        Iterator it = problemToCount.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            String name = (String) pair.getKey();
-            int value = (int) pair.getValue();
-            it.remove();
-            problemCountSegmentTree.set(value, new Node(new String[]{name},value));
-        }
+
     }
 
     static int sz;
@@ -208,7 +202,7 @@ public class ProblemSelection {
         return stack;
     }
 
-    static class SegmentTree {
+    public static class SegmentTree implements Serializable {
         Node tree[];
         int N;
 
@@ -268,7 +262,7 @@ public class ProblemSelection {
         }
     }
 
-    static class Node {
+    static class Node implements Serializable {
         String[] id;
         int max;
 

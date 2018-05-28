@@ -23,10 +23,12 @@ public class Utils {
     public static final String PROBLEMS_SERIALIZED_HASH_POINTS = System.getenv("HOME") + "/Desktop/data/";
     public static final String PROBLEMS_SERIALIZED_HASH_TAG = System.getenv("HOME") + "/Desktop/data/";
     public static final String PROBLEMS_SERIALIZED_HASH_COUNT = System.getenv("HOME") + "/Desktop/data/";
+    public static final String PROBLEMS_SERIALIZED_SEG_TREE_COUNT = System.getenv("HOME") + "/Desktop/data/";
 
     public static final String PROBLEMS_SERIALIZED_HASH_POINTS_FILE = "PROBLEMS_SERIALIZED_HASH_POINTS_FILE";
     public static final String PROBLEMS_SERIALIZED_HASH_TAG_FILE = "PROBLEMS_SERIALIZED__HASH_TAG_FILE";
     public static final String PROBLEMS_SERIALIZED_HASH_COUNT_FILE = "PROBLEMS_SERIALIZED__HASH_COUNT_FILE";
+    public static final String PROBLEMS_SERIALIZED_SEG_TREE_COUNT_FILE = "PROBLEMS_SERIALIZED__SEG_COUNT_FILE";
 
 
     /**
@@ -47,6 +49,13 @@ public class Utils {
         }
         return fileNames;
     }
+
+    /**
+     * Get DirectoryNames In A Directory
+     *
+     * @param fileName
+     * @return
+     */
     public static ArrayList<String> getFolderNamesInADirectory(String fileName) {
         File folder = new File(fileName);
         File[] listOfFiles = folder.listFiles();
