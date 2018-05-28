@@ -48,3 +48,6 @@ buildNumber.properties
 
 # Mac
 .DS_Store
+
+*.json
+*.ser
