@@ -16,7 +16,7 @@ public class Main {
 
         Solver solver = new Solver();
         solver.prepareProblems();
-        solver.prepareContests();
+//        solver.prepareContests();
         solver.prepareUsers();
 //        solver.evaluateConstestPerformance("Amerisma", false);
 

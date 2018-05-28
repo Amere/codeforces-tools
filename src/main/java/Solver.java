@@ -128,9 +128,9 @@ public class Solver {
         deser = new Deserializer(Utils.USERS_DATA_PATH + handle + "/", "firstSubmissions");
         HashMap<String, Integer> firstSubmission = (HashMap<String, Integer>) deser.readObject();
         deser = new Deserializer(Utils.CONTESTS_ARRAY_PATH, Utils.CONTESTS_ARRAY_FILE);
-        System.out.println("Old Rankings : " + contestRanking);
+//        System.out.println("Old Rankings : " + contestRanking);
         ArrayList<Contest> contests = (ArrayList<Contest>) deser.readObject();
-        System.out.println(firstSubmission.size() + firstSubmission.toString());
+//        System.out.println(firstSubmission.size() + firstSubmission.toString());
         return null;
     }
 }

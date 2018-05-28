@@ -5,10 +5,7 @@ import helpers.Serializer;
 import helpers.Utils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 
 public class User implements Serializable {
@@ -35,7 +32,6 @@ public class User implements Serializable {
         this.handle = handle;
         processFirstSubmissions();
         processContestsRanking();
-        Collections.sort(sortedAcceptedProblems);
     }
 
     public void processFirstSubmissions() throws Exception {
@@ -53,7 +49,9 @@ public class User implements Serializable {
                  * to be binary-searched on later
                  */
                 if(data.get("verdict").getAsString().equals("OK")) {
-                    sortedAcceptedProblems.add(new AcceptedProblemDataPair(problemName, createdTime));
+                    AcceptedProblemDataPair pair = new AcceptedProblemDataPair(problemName, createdTime);
+                    if(!sortedAcceptedProblems.contains(pair))
+                        sortedAcceptedProblems.add(pair);
                 }
 
                 if(data.get("author").getAsJsonObject().get("participantType").getAsString().equals("CONTESTANT")) {
@@ -71,6 +69,7 @@ public class User implements Serializable {
                 System.err.println("This problem data is corrupted");
             }
         }
+        Collections.sort(sortedAcceptedProblems);
         Serializer ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "sortedAcceptedProblems");
         ser.writeObject(sortedAcceptedProblems);
         ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "firstSubmissions");
@@ -88,7 +87,7 @@ public class User implements Serializable {
             JsonObject data = record.getAsJsonObject();
             contestRanking.put(data.get("contestId").getAsInt(), data.get("rank").getAsInt());
         }
-        System.out.println(contestRanking);
+//        System.out.println(contestRanking);
         Serializer ser = new Serializer(Utils.USERS_DATA_PATH + "/" + handle + "/", "contestRanking");
         ser.writeObject(contestRanking);
         /**
@@ -110,18 +109,38 @@ public class User implements Serializable {
     public class AcceptedProblemDataPair implements Comparable, Serializable {
         public int timeCreated;
         public String problemName;
+
+        private static final long serialVersionUID = 9135453663667502917L;
+
         public AcceptedProblemDataPair(String problemName, int timeCreated) {
             this.timeCreated = timeCreated;
             this.problemName = problemName;
         }
 
-        int compareTo(AcceptedProblemDataPair  other) {
-            return this.timeCreated - other.timeCreated;
-        }
-
         @Override
         public int compareTo(Object o) {
             return this.timeCreated - ((AcceptedProblemDataPair) o).timeCreated;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            AcceptedProblemDataPair that = (AcceptedProblemDataPair) o;
+            return Objects.equals(problemName, that.problemName);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(problemName);
+        }
+
+        @Override
+        public String toString() {
+            return "AcceptedProblemDataPair{" +
+                    "timeCreated=" + timeCreated +
+                    ", problemName='" + problemName + '\'' +
+                    '}';
         }
     }
      static class UserRatingDataPair implements Comparable, Serializable {
