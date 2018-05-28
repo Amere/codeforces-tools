@@ -22,8 +22,16 @@ The `prepareProblems()` is used to gather the date for problems and get the poin
 
 ## problem 1.2
 
+Documentation on the code will do better understanding the concept
+We use contestId + problemIndex as identifier for a problem
+We process in the `Contest` class and save most of the data of it
+We also serialize two hashMaps in the user one is `firstSubmission` which is relative time in the contest for this submission
+We also serialize in prepare problems the other one is `problemsToPoints` to map problem to corresponding points
+Actual points / penalties are computed in the preparation process (initialistion of a contest)
+We use compute users new rating by going through the contests he entered which are saved in `contestRanking` for each user
+Then we compute the new points / penalty based on the problems solved of this contest
 
-# problem 1.3
+## problem 1.3
 
 In the problem here , The solution is based on 2 arraylists coming from the pre processing of data as one is the ArrayList of
 pairs of the problem and the time of the problem solved for each user, this list only includes accepted problems. The other arrayList contatins
